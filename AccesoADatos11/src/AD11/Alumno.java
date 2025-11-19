@@ -85,4 +85,8 @@ public class Alumno {
 	void convertidorDeFechas(int year, int month, int day) {
 		fecha_nacimiento=LocalDate.of(year, month, day);
 	}
+
+	public String fechaNacimientoSQL() {
+		return this.getFecha_nacimiento().getYear()+"-"+this.getFecha_nacimiento().getMonthValue()+"-"+this.getFecha_nacimiento().getDayOfMonth();
+	}
 }
