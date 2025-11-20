@@ -23,9 +23,12 @@ public class MenuMYSQL {
 			System.out.println("--- MENU ---" + "\n" + "1. Insertar nuevo alumno" + "\n" + "2. Mostrar alumnos" + "\n"
 					+ "3. Guardar alumnos en un fichero (No XML, no JSon)" + "\n"
 					+ "4. Leer alumnos de un fichero (No XML, no JSon)" + "\n"
-					+ "5. Modificar nombre del graduado (Primary Key)" + "\n" + "6. Eliminar alumnos" + "\n"
-					+ "7. Eliminar alumnos por apellido" + "\n" + "8. Guardar todos los alumnos en XML o JSON" + "\n"
-					+ "9. Leer XML o JSON y guardarlo en la BBDD" + "\n" + "0. Salir" + "\n");
+					+ "5. Modificar nombre del graduado (Primary Key)" + "\n" 
+					+ "6. Eliminar alumnos" + "\n"
+					+ "7. Eliminar alumnos por apellido" + "\n" 
+					+ "8. Guardar todos los alumnos en XML o JSON" + "\n"
+					+ "9. Leer XML o JSON y guardarlo en la BBDD" + "\n" 
+					+ "0. Salir" + "\n");
 
 			key = sc.nextInt();
 			sc.nextLine();
@@ -136,8 +139,8 @@ public class MenuMYSQL {
 			String consulta = "SELECT Nia, Nombre, Apellidos, Genero, FechaNac, Curso, Ciclo, Grupo \n FROM alumnos";
 			ResultSet resul = sentencia.executeQuery(consulta);
 			while(resul.next()) {
-				bw.write(resul.getInt(1) + resul.getString(2) + resul.getString(3) + resul.getString(4) + resul.getString(5) + 
-						resul.getString(6) + resul.getString(7) + resul.getString(8));
+				bw.write(resul.getInt(1) + "/"+ resul.getInt(2) + "/"+ resul.getInt(3) + "/"+ resul.getInt(4) + "/"+ resul.getInt(5) + "/"
+						+ resul.getInt(6) + "/"+ resul.getInt(7) + "/"+ resul.getInt(8));
 			}
 		} catch(Exception e) {
 			e.getStackTrace();
@@ -148,10 +151,15 @@ public class MenuMYSQL {
 		System.out.println("Donde desea guardarlo:");
 		File f = new File(sc.nextLine());
 		try(BufferedReader br = new BufferedReader(new FileReader(f))){
-			String consulta = "SELECT Nia, Nombre, Apellidos, Genero, FechaNac, Curso, Ciclo, Grupo \n FROM alumnos";
-			ResultSet resul = sentencia.executeQuery(consulta);
-			while(resul.next()) {
-				
+			String resultadoFichero;
+			String [] resultadoFicheroArray;
+			int resul;
+			while((resultadoFichero = br.readLine()) != null) {
+				resultadoFicheroArray = resultadoFichero.split("/");
+				resul = sentencia.executeUpdate("INSERT INTO alumnos (Nia, Nombre, Apellidos, Genero, FechaNac, Curso, Ciclo, Grupo)\n"
+						+ "VALUES ('" + resultadoFicheroArray[0] + "', '" + resultadoFicheroArray[1] + "', '" + resultadoFicheroArray[2] + "', '"
+						+ resultadoFicheroArray[3] + "', '" + resultadoFicheroArray[4] + " 00:00:00', '" +resultadoFicheroArray[5] + "', '"
+						+ resultadoFicheroArray[6] + "', '" + resultadoFicheroArray[7] + "');");
 			}
 		} catch(Exception e) {
 			e.getStackTrace();
