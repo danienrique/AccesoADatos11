@@ -60,8 +60,7 @@ public class Alumno implements Serializable {
 	}
 	Alumno(){
 	}
-	public Alumno(int ni, String name, String surname, String cicle, String curse, String group, char genre, int anio, int mes,
-			int dia) {
+	public Alumno(int ni, String name, String surname,char genre, int anio, int mes, int dia, String cicle, String curse, String group) {
 		this.nia = ni;
 		this.nombre = name;
 		this.apellidos = surname;
